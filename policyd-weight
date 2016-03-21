@@ -2561,6 +2561,21 @@ sub weighted_check
         }
     }
 
+## Client does not resolve check ##############################################
+
+    my $ip_resolv   = $attr{client_address};
+    my $query_resolv = $res->send($ip, 'PTR');
+    if ($query_resolv) # if the DNS Server responded
+    {
+            if ( ! ($query_resolv->answer) ) # if the answer is empty, no records were found
+            {
+                   $do_client_from_check = 1;
+#                   my $score   = 1;
+#                   $RET    .= ' CLIENT_NO_RESOLVE='.$score;
+                   $RET    .= ' CLIENT_NO_RESOLVE';
+#                   $rate   += $score;
+            }
+    }
 
 ## HELO dialup check ##########################################################
 
