@@ -2624,7 +2624,7 @@ sub weighted_check
 ## From has nobody/anonymous user #############################################
     my $anon= 0;
 
-    if($orig_from =~ /(nobody|anonymous|noreply|no\-reply)\@/)
+    if($orig_from =~ /(nobody|anonymous|noreply|no\-reply|webmaster|postmaster)\@/)
     {
      my $score              = $from_anon[0] + $total_dnsbl_score + 
                               $glob_numeric_score;
