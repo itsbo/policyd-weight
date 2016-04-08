@@ -2573,7 +2573,7 @@ sub weighted_check
             {
                    if ( index($addresses,$ip) == -1 ) # if the client is in FROM or HELO IPs, do nothing
                    {
-#                      $do_client_from_check = 1;
+                       $do_client_from_check = 1;
 #                      my $score   = 1;
 #                      $RET    .= ' CLIENT_NO_RESOLVE='.$score;
                        $RET    .= ' CLIENT_NO_RESOLVE';
