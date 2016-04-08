@@ -394,7 +394,9 @@ my $MAXDNSBLMSG   = '550 Your MTA is listed in too many DNSBLs';
 
 ## RHSBL settings
 my @rhsbl_score = (
-    'multi.surbl.org',             4,        0,        'SURBL'
+    'multi.surbl.org',             4,        0,        'SURBL',
+    'dbl.spamhaus.org',            4,        0,        'DBL_SPAMHAUS',
+    'black.uribl.com',             4,        0,        'BLACK_URIBL'
 );
 
 my $BL_ERROR_SKIP     = 2;  # skip a RBL if this RBL had this many continuous
@@ -2569,11 +2571,14 @@ sub weighted_check
     {
             if ( ! ($query_resolv->answer) ) # if the answer is empty, no records were found
             {
-                   $do_client_from_check = 1;
-#                   my $score   = 1;
-#                   $RET    .= ' CLIENT_NO_RESOLVE='.$score;
-                   $RET    .= ' CLIENT_NO_RESOLVE';
-#                   $rate   += $score;
+                   if ( index($addresses,$ip) == -1 ) # if the client is in FROM or HELO IPs, do nothing
+                   {
+#                      $do_client_from_check = 1;
+#                      my $score   = 1;
+#                      $RET    .= ' CLIENT_NO_RESOLVE='.$score;
+                       $RET    .= ' CLIENT_NO_RESOLVE';
+#                      $rate   += $score;
+                   }
             }
     }
 
